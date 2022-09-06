@@ -1,51 +1,77 @@
-import { Heading, Container, Text, Flex, Link, Code } from "@chakra-ui/react";
+import { Heading, Text, Flex, Box, Button } from "@chakra-ui/react";
 import React from "react";
+import Typed from "react-typed";
+import { BsArrowRight } from "react-icons/bs";
 
 function Hero() {
   return (
     <>
-      <Container maxW={"1100px"} h={"39vh"} px={"2rem"}>
-        <Flex
-          flexDirection={"column"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          h={"100%"}
-          w={"100%"}
-          py={"4rem"}
-        >
-          <Flex justifyContent={"center"} alignItems={"center"}>
-            <Heading
-              className={"h-shadow-black"}
-              fontWeight={"700"}
-              fontSize={["1.4rem", "1rem", "2.5rem", "3rem", "4rem"]}
-            >
-              Welcome to&nbsp;
-            </Heading>
-            <Link
-              className={"h-shadow-blue"}
-              color={"#0070f3"}
-              isExternal
-              href="https://github.com/lakshh07/Web3-Starter-Kit"
-            >
-              <Heading
-                fontWeight={"700"}
-                fontSize={["1.4rem", "1rem", "2.5rem", "3rem", "4rem"]}
-              >
-                Web3 Starter Kit!
-              </Heading>
-            </Link>
-          </Flex>
+      <Box
+        h={"80vh"}
+        px={"2rem"}
+        position={"relative"}
+        bg={"rgb(23, 26, 35)"}
+        backgroundImage={"url(/assets/grid-bg.png)"}
+        backgroundPosition={"center"}
+        backgroundRepeat={"repeat no-repeat"}
+        align={"center"}
+      >
+        <Box className="grad1" />
+        <Box className="grad2" />
 
-          <Text
-            textAlign={"center"}
-            mt={"4rem"}
-            fontSize={["1rem", "1rem", "1.2rem", "1.4rem", "1.6rem"]}
-          >
-            Get started by editing{" "}
-            <Code fontSize={"1.5rem"}>pages/index.js</Code>
-          </Text>
+        <Flex h={"110%"} alignItems={"center"} justifyContent={"center"}>
+          <Box align={"center"} textAlign={"center"} w={"60%"}>
+            <Heading fontSize={"80px"} lineHeight={1} className={"text-grad"}>
+              Web3-Native space for the
+              <span style={{ fontFamily: "Garamond" }}>
+                {" "}
+                world&apos;s best
+              </span>{" "}
+            </Heading>
+
+            <Heading
+              fontFamily={"Clash Display"}
+              fontSize={"80px"}
+              lineHeight={1}
+            >
+              <Typed
+                strings={["Builder.", "Creaters.", "NFT Communities.", "DAOs."]}
+                typeSpeed={150}
+                backSpeed={50}
+                loop
+              />
+            </Heading>
+
+            <Text
+              mt={"32px"}
+              fontSize={"20px"}
+              lineHeight={"140%"}
+              fontWeight={500}
+              color="rgba(255,255,255,.9)"
+            >
+              A new way community driven space for web3
+            </Text>
+
+            <Button
+              mt={"60px"}
+              bg={"whitesmoke"}
+              color={"#111"}
+              border={"1px solid whitesmoke"}
+              _hover={{
+                bg: "transparent",
+                color: "whitesmoke",
+                transform: "scale(1.025)",
+              }}
+              rightIcon={<BsArrowRight />}
+            >
+              Get Started
+            </Button>
+            <Text color="rgba(255,255,255,.75)" mt={"18px"} fontSize={"15px"}>
+              Oh! Did we mention it&apos;s free?
+            </Text>
+          </Box>
         </Flex>
-      </Container>
+      </Box>
     </>
   );
 }
