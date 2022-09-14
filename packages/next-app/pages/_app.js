@@ -1,12 +1,15 @@
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import { useRouter } from "next/router";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiConfig } from "wagmi";
 import { wagmiClient, chains } from "../helpers/rainbowSetup";
 import Navbar from "./components/Navbar";
+import NavbarSmall from "./components/NavbarSmall";
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
   const appInfo = {
     appName: "🦄Web3Connect",
   };
@@ -32,7 +35,7 @@ function MyApp({ Component, pageProps }) {
         chains={chains}
       >
         <ChakraProvider theme={theme}>
-          <Navbar />
+          {router.asPath === "/" ? <Navbar /> : <NavbarSmall />}
           <Component {...pageProps} />
         </ChakraProvider>
       </RainbowKitProvider>

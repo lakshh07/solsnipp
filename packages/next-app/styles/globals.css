@@ -92,6 +92,45 @@ sup {
   /* z-index: -1; */
   opacity: 0.5;
 }
+.grad3 {
+  background: radial-gradient(
+    149.87% 146.36% at 89.49% 87.48%,
+    rgb(18, 194, 233) 0%,
+    rgb(202, 105, 250) 54.3%,
+    rgb(254, 71, 82) 100%
+  );
+  filter: blur(100px);
+  height: 600px;
+  width: 600px;
+  border-radius: 50%;
+  position: absolute;
+  top: 30%;
+  left: -15%;
+  z-index: -1;
+  opacity: 0.2;
+}
+.grad4 {
+  background: radial-gradient(
+      77.73% 77.73% at 98.52% 96.25%,
+      rgb(249, 139, 218) 0%,
+      rgba(128, 76, 239, 0) 50.52%,
+      rgba(91, 216, 216, 0) 100%
+    ),
+    linear-gradient(
+      126.99deg,
+      rgb(129, 119, 243) 4.57%,
+      rgb(36, 107, 253) 77.72%
+    );
+  filter: blur(100px);
+  height: 800px;
+  width: 800px;
+  border-radius: 50%;
+  position: absolute;
+  top: -25%;
+  right: -15%;
+  z-index: -1;
+  opacity: 0.2;
+}
 
 .text-grad {
   background-image: url(/assets/gradient-33.png);
