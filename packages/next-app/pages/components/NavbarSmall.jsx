@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider, Flex, Heading } from "@chakra-ui/react";
+import { Flex, Heading, Link } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 function NavbarSmall() {
@@ -12,13 +12,13 @@ function NavbarSmall() {
         zIndex={"999"}
         position={"relative"}
       >
-        <Heading fontFamily={"Cairo"} fontWeight={800} fontSize={"30px"}>
-          Web<sup>3</sup>Connect
-        </Heading>
+        <Link href="/">
+          <Heading fontFamily={"Cairo"} fontWeight={800} fontSize={"30px"}>
+            ⛓ SolSnipp
+          </Heading>
+        </Link>
         <ConnectButton />
       </Flex>
-
-      {/* <Divider /> */}
     </>
   );
 }

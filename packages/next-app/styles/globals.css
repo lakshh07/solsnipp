@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap");
 
 @font-face {
   font-family: "Clash Display";
@@ -14,11 +14,13 @@ body {
   padding: 0;
   margin: 0;
   transition: all 0.25s linear 0s;
+  overflow-x: hidden;
+  height: 100vh;
 }
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 * {
