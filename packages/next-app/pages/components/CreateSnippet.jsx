@@ -1,15 +1,13 @@
 import { Button, Flex, useDisclosure } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import { GoGitPullRequest } from "react-icons/go";
 import { MdAdd } from "react-icons/md";
 import { useAccount } from "wagmi";
 import CreateSnippetModal from "./CreateSnippetModal";
 
 function CreateSnippet({ owner }) {
-  const [checkOwner, setCheckOwner] = useState(false);
-
-  const { address } = useAccount();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { address } = useAccount();
 
   return (
     <Flex
@@ -17,7 +15,7 @@ function CreateSnippet({ owner }) {
       alignItems={"center"}
       m={"10px 10px 20px"}
     >
-      {/* {owner === address && (
+      {owner && (
         <Button
           bg={"whitesmoke"}
           color={"#111"}
@@ -31,10 +29,11 @@ function CreateSnippet({ owner }) {
           mr={"16px"}
           rightIcon={<MdAdd />}
           onClick={onOpen}
+          isDisabled={address ? false : true}
         >
           Create Snippet
         </Button>
-      )} */}
+      )}
 
       <Button
         bg={"whitesmoke"}
@@ -48,6 +47,7 @@ function CreateSnippet({ owner }) {
         width={"100%"}
         rightIcon={<GoGitPullRequest />}
         onClick={onOpen}
+        isDisabled={address ? false : true}
       >
         Request Snippet
       </Button>
@@ -55,7 +55,7 @@ function CreateSnippet({ owner }) {
       <CreateSnippetModal
         isOpen={isOpen}
         onClose={onClose}
-        checkOwner={checkOwner}
+        checkOwner={owner}
       />
     </Flex>
   );

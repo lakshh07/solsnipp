@@ -5,33 +5,8 @@ import Typed from "react-typed";
 import { BsArrowRight } from "react-icons/bs";
 import { SiVisualstudiocode } from "react-icons/si";
 
-function Hero({ launches }) {
+function Hero() {
   const router = useRouter();
-
-  console.log(launches);
-
-  const content = `<!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Document</title>
-  </head>
-  <body>
-      
-  </body>
-  </html>
-  `;
-  // console.log(content.replace(/(\r\n)|\r|\n/g, "\n").split(/\n+/g));
-  // contents.replace(/(\r\n)|\r|\n/g, '\n').split(/\n+/g)
-  const arrC = content.replace(/(\r\n)|\r|\n/g, "\n").split(/\n+/g);
-
-  const a = arrC.filter((lines) => {
-    return lines.length < 3;
-  });
-
-  console.log(a);
 
   return (
     <>
@@ -98,8 +73,8 @@ function Hero({ launches }) {
               </Button>
               <Button
                 mx={"10px"}
-                bg={"whitesmoke"}
-                color={"#111"}
+                bg={"transparent"}
+                color={"#fff"}
                 border={"1px solid whitesmoke"}
                 _hover={{
                   bg: "transparent",
@@ -109,7 +84,7 @@ function Hero({ launches }) {
                 rightIcon={<BsArrowRight />}
                 onClick={() => router.push("/dashboard")}
               >
-                Get Started
+                Contribute
               </Button>
             </Flex>
 
@@ -124,11 +99,3 @@ function Hero({ launches }) {
 }
 
 export default Hero;
-
-export async function getStaticProps({ params }) {
-  return {
-    props: {
-      launches: [""],
-    },
-  };
-}

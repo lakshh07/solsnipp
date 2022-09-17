@@ -4,7 +4,6 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  Heading,
   Input,
   Modal,
   ModalBody,
@@ -13,22 +12,13 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
   Textarea,
-  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import { create } from "ipfs-http-client";
 import * as IPFS from "ipfs-core";
 
-import {
-  useAccount,
-  useContractRead,
-  useProvider,
-  useSigner,
-  useWaitForTransaction,
-} from "wagmi";
+import { useSigner, useWaitForTransaction } from "wagmi";
 import { solSnippAddress } from "../../utils/contractAddress";
 import snippContractAbi from "../../contracts/ABI/SolSnipp.json";
 import { ethers } from "ethers";
@@ -36,6 +26,7 @@ import { ethers } from "ethers";
 function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
   const toast = useToast();
   const { data: signer } = useSigner();
+
   const [hash, setHash] = useState("");
   const [snipData, setSnipData] = useState({
     label: "",
@@ -48,23 +39,6 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
     setSnipData(() => ({ ...snipData, [e.target.name]: e.target.value }));
   }
 
-  const client = create("https://ipfs.infura.io:5001/api/v0");
-
-  async function savePostToIpfs() {
-    try {
-      const added = await client.add(JSON.stringify(snipData));
-      return added.path;
-    } catch (err) {
-      console.log("error: ", err);
-    }
-  }
-
-  useEffect(() => {
-    // const ipfs = IPFS.create();
-    // let data = ipfs.cat("QmWW1nCHikcC6qdVDKu7NHqZvuqudRxyESVu2H3oXDbZXJ");
-    // console.logo(data);
-  }, []);
-
   async function onSubmit() {
     const contract = new ethers.Contract(
       solSnippAddress,
@@ -73,20 +47,19 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
     );
 
     const ipfs = await IPFS.create();
-    const { cid } = await ipfs.add(JSON.stringify(snipData.body));
+    const { cid } = await ipfs.add(JSON.stringify(snipData));
 
-    // const result = await contract.createSnippet(
-    //   snipData.label,
-    //   snipData.description,
-    //   // cid.toString(),
-    //   "QmWW1nCHikcC6qdVDKu7NHqZvuqudRxyESVu2H3oXDbZXJ",
-    //   true
-    // );
-    // console.log(result.hash);
-    // setHash(result.hash);
+    const result = await contract.createSnippet(
+      snipData.label,
+      snipData.description,
+      cid.toString(),
+      checkOwner ? true : false
+    );
 
-    console.log(cid);
     console.log(cid.toString());
+    console.log(result.hash);
+
+    setHash(result.hash);
   }
 
   const { isLoading, isSuccess } = useWaitForTransaction({
@@ -111,6 +84,7 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
         isClosable: true,
         variant: "subtle",
         position: "bottom-right",
+        containerStyle: { color: "blackAlpha.800" },
       });
 
     isSuccess &&
@@ -121,6 +95,7 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
         isClosable: true,
         position: "bottom-right",
         variant: "subtle",
+        containerStyle: { color: "blackAlpha.800" },
       });
 
     isSuccess &&
@@ -129,7 +104,6 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
       }, 4000);
   }, [isSuccess, isLoading, setSnipData, toast]);
 
-  // {checkOwner.toString()}
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} size={"2xl"} isCentered>

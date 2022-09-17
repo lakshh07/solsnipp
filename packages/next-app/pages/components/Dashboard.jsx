@@ -1,14 +1,17 @@
 import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CreateSnippet from "./CreateSnippet";
 import Requests from "./Requests";
 import Snippets from "./Snippets";
 
-import { useContractRead } from "wagmi";
+import { useAccount, useContractRead } from "wagmi";
 import { solSnippAddress } from "../../utils/contractAddress";
 import snippContractAbi from "../../contracts/ABI/SolSnipp.json";
 
 function Dashboard({ snippets }) {
+  const [checkOwner, setCheckOwner] = useState(false);
+  const { address } = useAccount();
+
   const { data: owner } = useContractRead({
     addressOrName: solSnippAddress,
     contractInterface: snippContractAbi,
@@ -16,7 +19,13 @@ function Dashboard({ snippets }) {
     watch: true,
   });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (owner === address) {
+      setCheckOwner(true);
+    } else {
+      setCheckOwner(false);
+    }
+  }, [owner, address]);
 
   return (
     <>
@@ -41,11 +50,11 @@ function Dashboard({ snippets }) {
             color={"white"}
             bg={"rgba(3, 5, 13, 0.3)"}
           >
-            <Requests owner={owner} snippets={snippets} />
+            <Requests owner={checkOwner} snippets={snippets} />
           </GridItem>
 
           <GridItem h={"100%"}>
-            <CreateSnippet owner={owner} />
+            <CreateSnippet owner={checkOwner} />
             <Box
               h={"89%"}
               p={"20px"}

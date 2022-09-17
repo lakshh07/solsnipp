@@ -2,7 +2,7 @@
   "name": "web3-solsnipp",
   "displayName": "SolSnipp",
   "description": "Snippets for solidity",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.71.0"
   },
@@ -15,19 +15,19 @@
   ],
   "activationEvents": [
     "onLanguage:solidity",
-    "onCommand:web3-solsnipp.helloWorld"
+    "onCommand:web3-solsnipp.searchSnippet"
   ],
   "main": "./src/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "web3-solsnipp.helloWorld",
-        "title": "Hello World"
+        "command": "web3-solsnipp.searchSnippet",
+        "title": "SolSnipp"
       }
     ],
     "snippets": [
       {
-        "language": "html",
+        "language": "solidity",
         "path": "./src/snippets/generated.json"
       }
     ]
