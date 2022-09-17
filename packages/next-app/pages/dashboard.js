@@ -3,11 +3,7 @@ import Dashboard from "./components/Dashboard";
 import axios from "axios";
 
 export default function dashboard({ snippets }) {
-  return (
-    <>
-      <Dashboard snippets={snippets} />
-    </>
-  );
+  return <>{/* <Dashboard snippets={snippets} /> */}</>;
 }
 
 export async function getStaticProps() {
