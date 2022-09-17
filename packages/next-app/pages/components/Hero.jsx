@@ -5,8 +5,10 @@ import Typed from "react-typed";
 import { BsArrowRight } from "react-icons/bs";
 import { SiVisualstudiocode } from "react-icons/si";
 
-function Hero() {
+function Hero({ launches }) {
   const router = useRouter();
+
+  console.log(launches);
 
   const content = `<!DOCTYPE html>
   <html lang="en">
@@ -122,3 +124,11 @@ function Hero() {
 }
 
 export default Hero;
+
+export async function getStaticProps({ params }) {
+  return {
+    props: {
+      launches: [""],
+    },
+  };
+}

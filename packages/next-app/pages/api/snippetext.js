@@ -10,13 +10,10 @@ export default async function handler(req, res) {
   const { data } = await client.query({
     query: gql`
       query {
-        snippets(first: 5) {
-          id
+        snippets {
           label
           description
           body
-          status
-          owner
         }
       }
     `,

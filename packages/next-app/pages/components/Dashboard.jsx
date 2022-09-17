@@ -1,21 +1,14 @@
 import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import CreateSnippet from "./CreateSnippet";
-import PullRequests from "./PullRequests";
+import Requests from "./Requests";
 import Snippets from "./Snippets";
 
-import {
-  useAccount,
-  useContractRead,
-  useProvider,
-  useSigner,
-  useWaitForTransaction,
-} from "wagmi";
+import { useContractRead } from "wagmi";
 import { solSnippAddress } from "../../utils/contractAddress";
 import snippContractAbi from "../../contracts/ABI/SolSnipp.json";
-import { ethers } from "ethers";
 
-function Dashboard() {
+function Dashboard({ snippets }) {
   const { data: owner } = useContractRead({
     addressOrName: solSnippAddress,
     contractInterface: snippContractAbi,
@@ -48,7 +41,7 @@ function Dashboard() {
             color={"white"}
             bg={"rgba(3, 5, 13, 0.3)"}
           >
-            <PullRequests owner={owner} />
+            <Requests owner={owner} snippets={snippets} />
           </GridItem>
 
           <GridItem h={"100%"}>
@@ -64,7 +57,7 @@ function Dashboard() {
               color={"white"}
               bg={"rgba(3, 5, 13, 0.3)"}
             >
-              <Snippets />
+              <Snippets snippets={snippets} />
             </Box>
           </GridItem>
         </Grid>

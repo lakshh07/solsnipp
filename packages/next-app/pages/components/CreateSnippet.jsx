@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { GoGitPullRequest } from "react-icons/go";
 import { MdAdd } from "react-icons/md";
 import { useAccount } from "wagmi";
-import ViewRequests from "../components/ViewRequests";
+import CreateSnippetModal from "./CreateSnippetModal";
 
 function CreateSnippet({ owner }) {
   const [checkOwner, setCheckOwner] = useState(false);
@@ -17,7 +17,7 @@ function CreateSnippet({ owner }) {
       alignItems={"center"}
       m={"10px 10px 20px"}
     >
-      {owner === address && (
+      {/* {owner === address && (
         <Button
           bg={"whitesmoke"}
           color={"#111"}
@@ -34,7 +34,7 @@ function CreateSnippet({ owner }) {
         >
           Create Snippet
         </Button>
-      )}
+      )} */}
 
       <Button
         bg={"whitesmoke"}
@@ -52,7 +52,11 @@ function CreateSnippet({ owner }) {
         Request Snippet
       </Button>
 
-      <ViewRequests isOpen={isOpen} onClose={onClose} checkOwner={checkOwner} />
+      <CreateSnippetModal
+        isOpen={isOpen}
+        onClose={onClose}
+        checkOwner={checkOwner}
+      />
     </Flex>
   );
 }

@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { BsArrowUpRight } from "react-icons/bs";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import SpaceBox from "../components/SpaceBox";
+import SpaceBox from "../SpaceBox";
 
 function space() {
   return (

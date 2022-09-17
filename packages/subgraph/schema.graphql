@@ -1,0 +1,22 @@
+type Snippet @entity {
+  id: ID!
+  label: String!
+  description: String!
+  hash: String!
+  body: [String!]!
+  status: Boolean!
+  owner: Bytes!
+}
+
+type _Schema_
+  @fulltext(
+    name: "snippetSearch"
+    language: en
+    algorithm: rank
+    include: [
+      {
+        entity: "Snippet"
+        fields: [{ name: "label" }, { name: "description" }]
+      }
+    ]
+  )

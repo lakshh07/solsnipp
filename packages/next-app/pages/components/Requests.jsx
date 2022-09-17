@@ -11,52 +11,17 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import Blockies from "react-blockies";
 import truncateMiddle from "truncate-middle";
 import { IoMdAddCircle } from "react-icons/io";
 import { useAccount } from "wagmi";
 
-function PullRequests({ owner }) {
+export default function Requests({ snippets }) {
   const { address } = useAccount();
-  const requests = [
-    {
-      name: "NFT ERC1155",
-      des: "Template for EC721 with OpenZippelin",
-      approved: false,
-      owner: "0x563361c978C1630Af85E8AFd28821E8eF26b1Df8",
-      content: `"<!DOCTYPE html>",
-      "<html lang=\"en\">",
-      "<head>",
-      "<meta charset=\"UTF-8\">",
-      "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
-      "<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">",
-      "<meta name=\"Description\" content=\"Enter your description here\"/>",
-      "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css\">",
-      "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css\">",
-      "<link rel=\"stylesheet\" href=\"assets/css/style.css\">",
-      "<title>title</title>",
-      "</head>",
-      "<body>",
-      "$0",
-      "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js\"></script>",
-      "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js\"></script>",
-      "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js\"></script>",
-      "</body>",
-      "</html>"`,
-    },
-    {
-      name: "NFT ERC721",
-      des: "Template for ERC1155 with OpenZippelin",
-      approved: true,
-      owner: "0x7b1C1702A09521b4160f79f853b7F54ba6b35a59",
-      content: `ksfnmvlksnfvknfsknvsklfnvlksnvlksfvsvsvvsvsfvsfvsfvfsn fv
-      "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js\"></script>",
-      "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js\"></script>",
-      "<script src
-      `,
-    },
-  ];
+
+  // console.log(snippets);
+  useEffect(() => {}, []);
 
   return (
     <Box h={"100%"}>
@@ -86,15 +51,15 @@ function PullRequests({ owner }) {
           ml={"0.75rem"}
           fontWeight={600}
         >
-          {requests?.length}
+          {snippets?.length}
         </Text>
       </Flex>
 
       <Divider bg={"red"} opacity={"0.2"} />
 
       <Box mt={"15px"} overflow={"scroll"}>
-        <Accordion allowToggle>
-          {requests.map((list, index) => {
+        <Accordion allowToggle w={"721  px"}>
+          {snippets?.map((list, index) => {
             return (
               <AccordionItem position={"relative"} border={"none"} key={index}>
                 <AccordionButton
@@ -128,7 +93,7 @@ function PullRequests({ owner }) {
                         alignItems={"flex-start"}
                         flex={1}
                       >
-                        <Heading fontSize={"22px"}>{list.name}</Heading>
+                        <Heading fontSize={"22px"}>{list.label}</Heading>
                         <Text
                           pt={"3px"}
                           fontWeight={500}
@@ -137,19 +102,19 @@ function PullRequests({ owner }) {
                           opacity={"0.6"}
                           textAlign={"left"}
                         >
-                          {list.des}
+                          {list.description}
                         </Text>
                       </Flex>
 
                       <Flex alignItems={"center"}>
-                        {owner === address && (
+                        {/* {owner === address && (
                           <Box
                             mr={"10px"}
                             onClick={() => alert("approved request created")}
                           >
                             <IoMdAddCircle fontSize={"22px"} />
                           </Box>
-                        )}
+                        )} */}
 
                         <Text
                           borderWidth={"2px"}
@@ -164,12 +129,12 @@ function PullRequests({ owner }) {
                           fontWeight={600}
                           color={"#111"}
                           bg={
-                            list.approved
+                            list.status
                               ? "rgb(183 234 213)"
                               : "rgb(250 229 195)"
                           }
                         >
-                          {list.approved ? "approved" : "open"}
+                          {list.status ? "approved" : "open"}
                         </Text>
 
                         <Flex
@@ -212,7 +177,9 @@ function PullRequests({ owner }) {
                     </Flex>
 
                     <AccordionPanel textAlign={"left"} pt={6}>
-                      {list.content}
+                      {list.body.map((content, index) => {
+                        return <p key={index}>{content}</p>;
+                      })}
                     </AccordionPanel>
                   </Box>
                 </AccordionButton>
@@ -224,5 +191,3 @@ function PullRequests({ owner }) {
     </Box>
   );
 }
-
-export default PullRequests;

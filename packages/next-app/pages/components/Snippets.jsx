@@ -1,7 +1,7 @@
 import { Box, Divider, Flex, Heading, Text } from "@chakra-ui/react";
 import React from "react";
 
-function Snippets() {
+function Snippets({ snippets }) {
   const Existed = [
     {
       name: "NFT ERC1155",
@@ -60,14 +60,14 @@ function Snippets() {
           ml={"0.75rem"}
           fontWeight={600}
         >
-          {Existed?.length}
+          {snippets?.length}
         </Text>
       </Flex>
 
       <Divider bg={"red"} opacity={"0.2"} />
 
       <Box mt={"15px"} h={"450px"} overflow={"scroll"}>
-        {Existed.map((list, index) => {
+        {snippets?.map((list, index) => {
           return (
             <Box
               key={index}
@@ -82,7 +82,7 @@ function Snippets() {
                 flexDir={"column"}
                 alignItems={"flex-start"}
               >
-                <Heading fontSize={"20px"}>{list.name}</Heading>
+                <Heading fontSize={"20px"}>{list.label}</Heading>
                 <Text
                   pt={"3px"}
                   fontWeight={500}
@@ -90,7 +90,7 @@ function Snippets() {
                   fontSize={"14px"}
                   opacity={"0.6"}
                 >
-                  {list.des}
+                  {list.description}
                 </Text>
               </Flex>
             </Box>

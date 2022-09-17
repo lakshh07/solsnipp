@@ -16,10 +16,27 @@ import {
   Text,
   Textarea,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { create } from "ipfs-http-client";
+import * as IPFS from "ipfs-core";
 
-function ViewRequests({ isOpen, onClose, checkOwner }) {
+import {
+  useAccount,
+  useContractRead,
+  useProvider,
+  useSigner,
+  useWaitForTransaction,
+} from "wagmi";
+import { solSnippAddress } from "../../utils/contractAddress";
+import snippContractAbi from "../../contracts/ABI/SolSnipp.json";
+import { ethers } from "ethers";
+
+function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
+  const toast = useToast();
+  const { data: signer } = useSigner();
+  const [hash, setHash] = useState("");
   const [snipData, setSnipData] = useState({
     label: "",
     prefix: "",
@@ -31,17 +48,86 @@ function ViewRequests({ isOpen, onClose, checkOwner }) {
     setSnipData(() => ({ ...snipData, [e.target.name]: e.target.value }));
   }
 
-  function onSubmit() {
-    // setSnipData({
-    //   ...snipData,
-    //   body: snipData.body.replace(/(\r\n)|\r|\n/g, "\n").split(/\n+/g),
-    // });
-    // setSnipData({
-    //   ...snipData,
-    //   body: snipData.body.replace(/(\r\n)|\r|\n/g, "\n").split(/\n+/g),
-    // });
-    console.log(snipData);
+  const client = create("https://ipfs.infura.io:5001/api/v0");
+
+  async function savePostToIpfs() {
+    try {
+      const added = await client.add(JSON.stringify(snipData));
+      return added.path;
+    } catch (err) {
+      console.log("error: ", err);
+    }
   }
+
+  useEffect(() => {
+    // const ipfs = IPFS.create();
+    // let data = ipfs.cat("QmWW1nCHikcC6qdVDKu7NHqZvuqudRxyESVu2H3oXDbZXJ");
+    // console.logo(data);
+  }, []);
+
+  async function onSubmit() {
+    const contract = new ethers.Contract(
+      solSnippAddress,
+      snippContractAbi,
+      signer
+    );
+
+    const ipfs = await IPFS.create();
+    const { cid } = await ipfs.add(JSON.stringify(snipData.body));
+
+    // const result = await contract.createSnippet(
+    //   snipData.label,
+    //   snipData.description,
+    //   // cid.toString(),
+    //   "QmWW1nCHikcC6qdVDKu7NHqZvuqudRxyESVu2H3oXDbZXJ",
+    //   true
+    // );
+    // console.log(result.hash);
+    // setHash(result.hash);
+
+    console.log(cid);
+    console.log(cid.toString());
+  }
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: hash,
+  });
+
+  useEffect(() => {
+    hash &&
+      setSnipData({
+        label: "",
+        prefix: "",
+        body: "",
+        description: "",
+      });
+
+    isLoading &&
+      toast({
+        title: "Transaction Sent",
+        description: hash,
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+        variant: "subtle",
+        position: "bottom-right",
+      });
+
+    isSuccess &&
+      toast({
+        title: "Transaction Successfull",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom-right",
+        variant: "subtle",
+      });
+
+    isSuccess &&
+      setTimeout(() => {
+        onClose();
+      }, 4000);
+  }, [isSuccess, isLoading, setSnipData, toast]);
 
   // {checkOwner.toString()}
   return (
@@ -129,6 +215,7 @@ function ViewRequests({ isOpen, onClose, checkOwner }) {
                 transform: "scale(1.025)",
               }}
               onClick={onSubmit}
+              isLoading={isLoading}
             >
               Create
             </Button>
@@ -139,4 +226,4 @@ function ViewRequests({ isOpen, onClose, checkOwner }) {
   );
 }
 
-export default ViewRequests;
+export default CreateSnippetModal;
