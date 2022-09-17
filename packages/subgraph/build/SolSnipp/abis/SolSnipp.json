@@ -47,6 +47,12 @@
       },
       {
         "indexed": false,
+        "internalType": "string",
+        "name": "contractType",
+        "type": "string"
+      },
+      {
+        "indexed": false,
         "internalType": "bool",
         "name": "status",
         "type": "bool"
@@ -59,6 +65,25 @@
       }
     ],
     "name": "SnippetCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "status",
+        "type": "bool"
+      }
+    ],
+    "name": "StatusChanged",
     "type": "event"
   },
   {
@@ -89,6 +114,11 @@
       {
         "internalType": "string",
         "name": "_hash",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_contractType",
         "type": "string"
       },
       {
@@ -126,6 +156,11 @@
           {
             "internalType": "string",
             "name": "hash",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "contractType",
             "type": "string"
           },
           {

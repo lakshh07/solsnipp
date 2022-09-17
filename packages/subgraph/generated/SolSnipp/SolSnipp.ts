@@ -61,12 +61,38 @@ export class SnippetCreated__Params {
     return this._event.parameters[3].value.toString();
   }
 
+  get contractType(): string {
+    return this._event.parameters[4].value.toString();
+  }
+
   get status(): boolean {
-    return this._event.parameters[4].value.toBoolean();
+    return this._event.parameters[5].value.toBoolean();
   }
 
   get owner(): Address {
-    return this._event.parameters[5].value.toAddress();
+    return this._event.parameters[6].value.toAddress();
+  }
+}
+
+export class StatusChanged extends ethereum.Event {
+  get params(): StatusChanged__Params {
+    return new StatusChanged__Params(this);
+  }
+}
+
+export class StatusChanged__Params {
+  _event: StatusChanged;
+
+  constructor(event: StatusChanged) {
+    this._event = event;
+  }
+
+  get id(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get status(): boolean {
+    return this._event.parameters[1].value.toBoolean();
   }
 }
 
@@ -87,12 +113,16 @@ export class SolSnipp__fetchSnippetsResultValue0Struct extends ethereum.Tuple {
     return this[3].toString();
   }
 
+  get contractType(): string {
+    return this[4].toString();
+  }
+
   get status(): boolean {
-    return this[4].toBoolean();
+    return this[5].toBoolean();
   }
 
   get owner(): Address {
-    return this[5].toAddress();
+    return this[6].toAddress();
   }
 }
 
@@ -104,7 +134,7 @@ export class SolSnipp extends ethereum.SmartContract {
   fetchSnippets(): Array<SolSnipp__fetchSnippetsResultValue0Struct> {
     let result = super.call(
       "fetchSnippets",
-      "fetchSnippets():((uint256,string,string,string,bool,address)[])",
+      "fetchSnippets():((uint256,string,string,string,string,bool,address)[])",
       []
     );
 
@@ -116,7 +146,7 @@ export class SolSnipp extends ethereum.SmartContract {
   > {
     let result = super.tryCall(
       "fetchSnippets",
-      "fetchSnippets():((uint256,string,string,string,bool,address)[])",
+      "fetchSnippets():((uint256,string,string,string,string,bool,address)[])",
       []
     );
     if (result.reverted) {
@@ -203,8 +233,12 @@ export class CreateSnippetCall__Inputs {
     return this._call.inputValues[2].value.toString();
   }
 
+  get _contractType(): string {
+    return this._call.inputValues[3].value.toString();
+  }
+
   get _approveStatus(): boolean {
-    return this._call.inputValues[3].value.toBoolean();
+    return this._call.inputValues[4].value.toBoolean();
   }
 }
 

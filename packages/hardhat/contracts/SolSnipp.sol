@@ -23,6 +23,7 @@ contract SolSnipp is Ownable, ReentrancyGuard {
         string label;
         string description;
         string hash;
+        string contractType;
         bool status;
         address owner;
     }
@@ -32,9 +33,12 @@ contract SolSnipp is Ownable, ReentrancyGuard {
         string label,
         string description,
         string hash,
+        string contractType,
         bool status,
         address owner
     );
+
+    event StatusChanged(uint256 id, bool status);
 
     mapping(uint256 => Snippet) idToSnippet;
 
@@ -42,9 +46,13 @@ contract SolSnipp is Ownable, ReentrancyGuard {
         string memory _label,
         string memory _description,
         string memory _hash,
+        string memory _contractType,
         bool _approveStatus
     ) external nonReentrant {
-        require(bytes(_hash).length > 0, "hash required");
+        require(bytes(_label).length > 0, "label required");
+        require(bytes(_description).length > 0, "description required");
+        require(bytes(_hash).length > 0, "contractType required");
+        require(bytes(_contractType).length > 0, "hash required");
 
         _snippetsCount.increment();
         uint256 snippetCount = _snippetsCount.current();
@@ -54,6 +62,7 @@ contract SolSnipp is Ownable, ReentrancyGuard {
             _label,
             _description,
             _hash,
+            _contractType,
             _approveStatus,
             msg.sender
         );
@@ -63,6 +72,7 @@ contract SolSnipp is Ownable, ReentrancyGuard {
             _label,
             _description,
             _hash,
+            _contractType,
             _approveStatus,
             msg.sender
         );
@@ -71,6 +81,8 @@ contract SolSnipp is Ownable, ReentrancyGuard {
     function approve(uint256 _id) external onlyOwner nonReentrant {
         require(_id >= _snippetsCount.current());
         idToSnippet[_id].status = true;
+
+        emit StatusChanged(_id, idToSnippet[_id].status);
     }
 
     function fetchSnippets() external view returns (Snippet[] memory) {

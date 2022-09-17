@@ -4,6 +4,7 @@ type Snippet @entity {
   description: String!
   hash: String!
   body: [String!]!
+  contractType: String!
   status: Boolean!
   owner: Bytes!
 }

@@ -16,6 +16,7 @@ export default async function handler(req, res) {
           description
           body
           status
+          contractType
           owner
         }
       }

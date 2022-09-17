@@ -78,6 +78,15 @@ export class Snippet extends Entity {
     this.set("body", Value.fromStringArray(value));
   }
 
+  get contractType(): string {
+    let value = this.get("contractType");
+    return value!.toString();
+  }
+
+  set contractType(value: string) {
+    this.set("contractType", Value.fromString(value));
+  }
+
   get status(): boolean {
     let value = this.get("status");
     return value!.toBoolean();

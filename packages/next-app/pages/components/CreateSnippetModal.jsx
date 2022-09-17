@@ -29,10 +29,11 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
 
   const [hash, setHash] = useState("");
   const [snipData, setSnipData] = useState({
-    label: "",
     prefix: "",
-    body: "",
+    contractType: "",
+    label: "",
     description: "",
+    body: "",
   });
 
   function onChange(e) {
@@ -53,6 +54,7 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
       snipData.label,
       snipData.description,
       cid.toString(),
+      snipData.contractType,
       checkOwner ? true : false
     );
 
@@ -73,6 +75,7 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
         prefix: "",
         body: "",
         description: "",
+        contractType: "",
       });
 
     isLoading &&
@@ -118,18 +121,28 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
           <ModalCloseButton />
           <ModalBody>
             <Box>
-              <Flex>
-                <FormControl mr={"8px"} flex={2}>
-                  <FormLabel>Label</FormLabel>
+              <FormControl>
+                <FormLabel>Label</FormLabel>
+                <Input
+                  borderColor={"#8e96ff"}
+                  placeholder="label"
+                  name="label"
+                  value={snipData.label}
+                  onChange={onChange}
+                />
+              </FormControl>
+              <Flex mt={"16px"}>
+                <FormControl mr={"8px"}>
+                  <FormLabel>Contract Type</FormLabel>
                   <Input
                     borderColor={"#8e96ff"}
-                    placeholder="label"
-                    name="label"
-                    value={snipData.label}
+                    placeholder="NFT"
+                    name="contractType"
+                    value={snipData.contractType}
                     onChange={onChange}
                   />
                 </FormControl>
-                <FormControl ml={"8px"} flex={1}>
+                <FormControl ml={"8px"}>
                   <FormLabel>Prefix</FormLabel>
                   <Input
                     borderColor={"#8e96ff"}
