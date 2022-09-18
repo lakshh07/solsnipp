@@ -28,6 +28,7 @@
     "react": "^18.1.0",
     "react-blockies": "^1.4.1",
     "react-dom": "^18.1.0",
+    "react-flip-move": "^3.0.4",
     "react-icons": "^4.4.0",
     "react-typed": "^1.2.0",
     "truncate-middle": "^1.0.6",

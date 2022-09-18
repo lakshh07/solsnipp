@@ -1,5 +1,5 @@
 import { Heading, Text, Flex, Box, Button } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Typed from "react-typed";
 import { BsArrowRight } from "react-icons/bs";
@@ -7,6 +7,10 @@ import { SiVisualstudiocode } from "react-icons/si";
 
 function Hero() {
   const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch("/dashboard");
+  }, []);
 
   return (
     <>

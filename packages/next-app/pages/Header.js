@@ -3,7 +3,7 @@ import Head from "next/head";
 function Header() {
   return (
     <Head>
-      <title>Web3Connect</title>
+      <title>SolSnipp</title>
       <meta
         name="description"
         content="A quick starter to build on Ethereum and Polygon! 💜"

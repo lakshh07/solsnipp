@@ -22,10 +22,12 @@ import { useSigner, useWaitForTransaction } from "wagmi";
 import { solSnippAddress } from "../../utils/contractAddress";
 import snippContractAbi from "../../contracts/ABI/SolSnipp.json";
 import { ethers } from "ethers";
+import { useRouter } from "next/router";
 
 function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
   const toast = useToast();
   const { data: signer } = useSigner();
+  const router = useRouter();
 
   const [hash, setHash] = useState("");
   const [snipData, setSnipData] = useState({
@@ -104,7 +106,12 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
     isSuccess &&
       setTimeout(() => {
         onClose();
-      }, 4000);
+      }, 2000);
+
+    isSuccess &&
+      setTimeout(() => {
+        router.reload();
+      }, 3000);
   }, [isSuccess, isLoading, setSnipData, toast]);
 
   return (

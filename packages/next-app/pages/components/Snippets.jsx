@@ -8,27 +8,12 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import ViewSnippet from "./ViewSnippet";
+import FlipMove from "react-flip-move";
 
 function Snippets({ snippets }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [contractType, setContractType] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const contracts = [
-    "Nft",
-    "Token",
-    "Nft",
-    "Token",
-    "Nft",
-    "Token",
-    "Nft",
-    "Token",
-    "Nft",
-    "Token",
-    "Nft",
-    "Token",
-    "Nft",
-    "Token",
-  ];
 
   return (
     <Box h={"100%"}>
@@ -58,7 +43,10 @@ function Snippets({ snippets }) {
           ml={"0.75rem"}
           fontWeight={600}
         >
-          {snippets && snippets?.length}
+          {snippets &&
+            snippets?.filter((list) => {
+              return list.status;
+            }).length}
         </Text>
       </Flex>
 
@@ -66,14 +54,18 @@ function Snippets({ snippets }) {
 
       <Flex mt={"15px"}>
         <Box
-          // bg={"rgba(17, 19, 21, 0.8)"}
-          bg={"#f5f5f5"}
-          color={"black"}
+          bg={
+            contractType === ""
+              ? "rgba(255, 255, 255, 0.8)"
+              : "rgba(17, 19, 21, 0.8)"
+          }
+          color={contractType === "" ? "black" : "white"}
           border={"1px solid #8e96ff"}
           borderRadius={"999"}
           p={"2px 10px"}
           mr={"10px"}
           cursor={"pointer"}
+          onClick={() => setContractType("")}
         >
           <Text m={"0"} p={"0"} fontSize={"14px"}>
             All
@@ -88,13 +80,21 @@ function Snippets({ snippets }) {
               .map((list, index) => {
                 return (
                   <Box
-                    bg={"rgba(17, 19, 21, 0.8)"}
+                    bg={
+                      contractType === list.contractType
+                        ? "rgba(255, 255, 255, 0.8)"
+                        : "rgba(17, 19, 21, 0.8)"
+                    }
+                    color={
+                      contractType === list.contractType ? "black" : "white"
+                    }
                     border={"1px solid #8e96ff"}
                     borderRadius={"999"}
                     p={"2px 10px"}
                     cursor={"pointer"}
                     mr={"10px"}
                     key={index}
+                    onClick={() => setContractType(list.contractType)}
                   >
                     <Text m={"0"} p={"0"} fontSize={"14px"}>
                       {list.contractType}
@@ -106,51 +106,56 @@ function Snippets({ snippets }) {
       </Flex>
 
       <Box h={"450px"} overflow={"scroll"}>
-        {snippets &&
-          snippets
-            ?.filter((list) => {
-              return list.status;
-            })
-            .map((list, index) => {
-              return (
-                <Box
-                  key={index}
-                  my={"16px"}
-                  p={"10px 15px"}
-                  bg={"rgba(17, 19, 21, 0.8)"}
-                  border={"1px solid #8e96ff"}
-                  borderRadius={"10px"}
-                >
-                  <Flex
-                    justifyContent={"center"}
-                    flexDir={"column"}
-                    alignItems={"flex-start"}
-                    cursor={"pointer"}
-                    onClick={() => {
-                      setActiveIndex(index);
-                      onOpen();
-                    }}
+        <FlipMove>
+          {snippets &&
+            snippets
+              ?.filter((list) => {
+                return list.status;
+              })
+              .filter((list) => {
+                return contractType ? list.contractType === contractType : list;
+              })
+              .map((list, index) => {
+                return (
+                  <Box
+                    key={index}
+                    my={"16px"}
+                    p={"10px 15px"}
+                    bg={"rgba(17, 19, 21, 0.8)"}
+                    border={"1px solid #8e96ff"}
+                    borderRadius={"10px"}
                   >
-                    <Heading fontSize={"20px"}>{list.label}</Heading>
-                    <Text
-                      pt={"3px"}
-                      fontWeight={500}
-                      color={"whitesmoke"}
-                      fontSize={"14px"}
-                      opacity={"0.6"}
+                    <Flex
+                      justifyContent={"center"}
+                      flexDir={"column"}
+                      alignItems={"flex-start"}
+                      cursor={"pointer"}
+                      onClick={() => {
+                        setActiveIndex(index);
+                        onOpen();
+                      }}
                     >
-                      {list.description}
-                    </Text>
-                  </Flex>
-                </Box>
-              );
-            })}
-        <ViewSnippet
-          isOpen={isOpen}
-          onClose={onClose}
-          index={activeIndex}
-          snippet={snippets}
-        />
+                      <Heading fontSize={"20px"}>{list.label}</Heading>
+                      <Text
+                        pt={"3px"}
+                        fontWeight={500}
+                        color={"whitesmoke"}
+                        fontSize={"14px"}
+                        opacity={"0.6"}
+                      >
+                        {list.description}
+                      </Text>
+                    </Flex>
+                  </Box>
+                );
+              })}
+          <ViewSnippet
+            isOpen={isOpen}
+            onClose={onClose}
+            index={activeIndex}
+            snippet={snippets}
+          />
+        </FlipMove>
       </Box>
     </Box>
   );

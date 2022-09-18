@@ -35,6 +35,8 @@ export function handleSnippetCreated(event: SnippetCreatedEvent): void {
 export function handleStatusChanged(event: StatusChangedEvent): void {
     let snippet = new Snippet(event.params.id.toString());
     snippet.status = event.params.status;
+
+    snippet.save();
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferredEvent): void {

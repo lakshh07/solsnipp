@@ -12,6 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Blockies from "react-blockies";
 import truncateMiddle from "truncate-middle";
 import { IoMdAddCircle } from "react-icons/io";
@@ -24,6 +25,7 @@ export default function Requests({ owner, snippets }) {
   const { data: signer } = useSigner();
   const [hash, setHash] = useState("");
   const toast = useToast();
+  const route = useRouter();
 
   async function approveRequest(_id, index) {
     const contract = new ethers.Contract(solSnippAddress, solSnippAbi, signer);
@@ -71,6 +73,11 @@ export default function Requests({ owner, snippets }) {
         variant: "subtle",
         containerStyle: { color: "blackAlpha.800" },
       });
+
+    isSuccess &&
+      setTimeout(() => {
+        route.reload();
+      }, 1000);
   }, [isSuccess, isLoading, toast]);
 
   return (

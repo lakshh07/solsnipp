@@ -35,7 +35,7 @@ function Dashboard({ snippets }) {
         <Grid
           position={"relative"}
           // h="80vh"
-          h={"100%"}
+          h={"90%"}
           templateColumns="1fr 0.5fr"
           gap={6}
         >
