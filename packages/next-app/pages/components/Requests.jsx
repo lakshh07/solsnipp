@@ -111,7 +111,7 @@ export default function Requests({ owner, snippets }) {
       <Divider bg={"red"} opacity={"0.2"} />
 
       <Box mt={"15px"} overflow={"scroll"}>
-        <Accordion allowToggle w={"721px"}>
+        <Accordion allowToggle w={"755px"}>
           {snippets &&
           snippets?.filter((list) => {
             return !list.status;

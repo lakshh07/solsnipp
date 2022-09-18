@@ -13,6 +13,23 @@ function Snippets({ snippets }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const contracts = [
+    "Nft",
+    "Token",
+    "Nft",
+    "Token",
+    "Nft",
+    "Token",
+    "Nft",
+    "Token",
+    "Nft",
+    "Token",
+    "Nft",
+    "Token",
+    "Nft",
+    "Token",
+  ];
+
   return (
     <Box h={"100%"}>
       <Flex
@@ -47,42 +64,87 @@ function Snippets({ snippets }) {
 
       <Divider bg={"red"} opacity={"0.2"} />
 
-      <Box mt={"15px"} h={"450px"} overflow={"scroll"}>
-        {snippets &&
-          snippets?.map((list, index) => {
-            return (
-              <Box
-                key={index}
-                my={"16px"}
-                p={"10px 15px"}
-                bg={"rgba(17, 19, 21, 0.8)"}
-                border={"1px solid #8e96ff"}
-                borderRadius={"10px"}
-              >
-                <Flex
-                  justifyContent={"center"}
-                  flexDir={"column"}
-                  alignItems={"flex-start"}
-                  cursor={"pointer"}
-                  onClick={() => {
-                    setActiveIndex(index);
-                    onOpen();
-                  }}
-                >
-                  <Heading fontSize={"20px"}>{list.label}</Heading>
-                  <Text
-                    pt={"3px"}
-                    fontWeight={500}
-                    color={"whitesmoke"}
-                    fontSize={"14px"}
-                    opacity={"0.6"}
+      <Flex mt={"15px"}>
+        <Box
+          // bg={"rgba(17, 19, 21, 0.8)"}
+          bg={"#f5f5f5"}
+          color={"black"}
+          border={"1px solid #8e96ff"}
+          borderRadius={"999"}
+          p={"2px 10px"}
+          mr={"10px"}
+          cursor={"pointer"}
+        >
+          <Text m={"0"} p={"0"} fontSize={"14px"}>
+            All
+          </Text>
+        </Box>
+        <Flex overflow={"scroll"} w={"300px"}>
+          {snippets &&
+            snippets
+              ?.filter((list) => {
+                return list.status;
+              })
+              .map((list, index) => {
+                return (
+                  <Box
+                    bg={"rgba(17, 19, 21, 0.8)"}
+                    border={"1px solid #8e96ff"}
+                    borderRadius={"999"}
+                    p={"2px 10px"}
+                    cursor={"pointer"}
+                    mr={"10px"}
+                    key={index}
                   >
-                    {list.description}
-                  </Text>
-                </Flex>
-              </Box>
-            );
-          })}
+                    <Text m={"0"} p={"0"} fontSize={"14px"}>
+                      {list.contractType}
+                    </Text>
+                  </Box>
+                );
+              })}
+        </Flex>
+      </Flex>
+
+      <Box h={"450px"} overflow={"scroll"}>
+        {snippets &&
+          snippets
+            ?.filter((list) => {
+              return list.status;
+            })
+            .map((list, index) => {
+              return (
+                <Box
+                  key={index}
+                  my={"16px"}
+                  p={"10px 15px"}
+                  bg={"rgba(17, 19, 21, 0.8)"}
+                  border={"1px solid #8e96ff"}
+                  borderRadius={"10px"}
+                >
+                  <Flex
+                    justifyContent={"center"}
+                    flexDir={"column"}
+                    alignItems={"flex-start"}
+                    cursor={"pointer"}
+                    onClick={() => {
+                      setActiveIndex(index);
+                      onOpen();
+                    }}
+                  >
+                    <Heading fontSize={"20px"}>{list.label}</Heading>
+                    <Text
+                      pt={"3px"}
+                      fontWeight={500}
+                      color={"whitesmoke"}
+                      fontSize={"14px"}
+                      opacity={"0.6"}
+                    >
+                      {list.description}
+                    </Text>
+                  </Flex>
+                </Box>
+              );
+            })}
         <ViewSnippet
           isOpen={isOpen}
           onClose={onClose}

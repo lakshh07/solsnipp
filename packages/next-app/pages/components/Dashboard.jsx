@@ -31,7 +31,7 @@ function Dashboard({ snippets }) {
     <>
       <Box className="grad3" />
       <Box className="grad4" />
-      <Container maxW={1200} top={"50px"} position={"relative"} h="80vh">
+      <Container maxW={1250} top={"50px"} position={"relative"} h="80vh">
         <Grid
           position={"relative"}
           // h="80vh"

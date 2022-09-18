@@ -17,6 +17,5 @@ export async function getStaticProps() {
     props: {
       snippets: (await response).data,
     },
-    revalidate: 10,
   };
 }
