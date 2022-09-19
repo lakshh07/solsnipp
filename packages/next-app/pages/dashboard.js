@@ -14,13 +14,12 @@ export default function dashboard({ snippets }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   const response = axios.get("https://solsnipp.vercel.app/api/snippets");
 
   return {
     props: {
       snippets: (await response).data,
     },
-    revalidate: 5,
   };
 }

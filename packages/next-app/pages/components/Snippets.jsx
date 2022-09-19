@@ -6,15 +6,44 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ViewSnippet from "./ViewSnippet";
 import FlipMove from "react-flip-move";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import client, { query } from "../api";
 
 function Snippets({ snippets }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [contractType, setContractType] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [typeArray, setTypeArray] = useState([]);
+  // const [snippets, setSnippets] = useState([]);
 
+  async function fetchData() {
+    const { data } = await client.query({
+      query: gql`
+        ${query}
+      `,
+    });
+    console.log(data.snippets, "da");
+    // setSnippets(data.snippets);
+  }
+
+  function makeContractTypeArray() {
+    let arr = [];
+    for (let i = 0; i < snippets?.length; i++) {
+      if (!arr.includes(snippets[i]?.contractType)) {
+        arr.push(snippets[i]?.contractType);
+      }
+    }
+    setTypeArray(arr);
+  }
+
+  useEffect(() => {
+    // fetchData();
+    makeContractTypeArray();
+  }, [snippets]);
+  // console.log(typeArray);
   return (
     <Box h={"100%"}>
       <Flex
@@ -52,7 +81,7 @@ function Snippets({ snippets }) {
 
       <Divider bg={"red"} opacity={"0.2"} />
 
-      <Flex mt={"15px"}>
+      <Flex mt={"15px"} pb={"10px"}>
         <Box
           bg={
             contractType === ""
@@ -73,35 +102,29 @@ function Snippets({ snippets }) {
         </Box>
         <Flex overflow={"scroll"} w={"300px"}>
           {snippets &&
-            snippets
-              ?.filter((list) => {
-                return list.status;
-              })
-              .map((list, index) => {
-                return (
-                  <Box
-                    bg={
-                      contractType === list.contractType
-                        ? "rgba(255, 255, 255, 0.8)"
-                        : "rgba(17, 19, 21, 0.8)"
-                    }
-                    color={
-                      contractType === list.contractType ? "black" : "white"
-                    }
-                    border={"1px solid #8e96ff"}
-                    borderRadius={"999"}
-                    p={"2px 10px"}
-                    cursor={"pointer"}
-                    mr={"10px"}
-                    key={index}
-                    onClick={() => setContractType(list.contractType)}
-                  >
-                    <Text m={"0"} p={"0"} fontSize={"14px"}>
-                      {list.contractType}
-                    </Text>
-                  </Box>
-                );
-              })}
+            typeArray.map((list, index) => {
+              return (
+                <Box
+                  bg={
+                    contractType === list
+                      ? "rgba(255, 255, 255, 0.8)"
+                      : "rgba(17, 19, 21, 0.8)"
+                  }
+                  color={contractType === list ? "black" : "white"}
+                  border={"1px solid #8e96ff"}
+                  borderRadius={"999"}
+                  p={"2px 10px"}
+                  cursor={"pointer"}
+                  mr={"10px"}
+                  key={index}
+                  onClick={() => setContractType(list)}
+                >
+                  <Text m={"0"} p={"0"} fontSize={"14px"}>
+                    {list}
+                  </Text>
+                </Box>
+              );
+            })}
         </Flex>
       </Flex>
 
