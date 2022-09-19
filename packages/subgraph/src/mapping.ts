@@ -12,6 +12,10 @@ export function handleSnippetCreated(event: SnippetCreatedEvent): void {
     if (data) {
         let value = json.fromBytes(data).toObject();
         if (value) {
+            const prefix = value.get("prefix");
+            if (prefix) {
+                snippet.prefix = prefix.toString();
+            }
             const content = value.get("body");
             if (content) {
                 let contentArray = content.toArray()
@@ -33,10 +37,11 @@ export function handleSnippetCreated(event: SnippetCreatedEvent): void {
 }
 
 export function handleStatusChanged(event: StatusChangedEvent): void {
-    let snippet = new Snippet(event.params.id.toString());
-    snippet.status = event.params.status;
-
-    snippet.save();
+    let snippet = Snippet.load(event.params.id.toString());
+    if (snippet) {
+        snippet.status = event.params.status;
+        snippet.save();
+    }
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferredEvent): void {

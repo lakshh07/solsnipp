@@ -3,6 +3,7 @@ type Snippet @entity {
   label: String!
   description: String!
   hash: String!
+  prefix: String!
   body: [String!]!
   contractType: String!
   status: Boolean!

@@ -69,6 +69,15 @@ export class Snippet extends Entity {
     this.set("hash", Value.fromString(value));
   }
 
+  get prefix(): string {
+    let value = this.get("prefix");
+    return value!.toString();
+  }
+
+  set prefix(value: string) {
+    this.set("prefix", Value.fromString(value));
+  }
+
   get body(): Array<string> {
     let value = this.get("body");
     return value!.toStringArray();
