@@ -24,7 +24,7 @@ import snippContractAbi from "../../contracts/ABI/SolSnipp.json";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 
-function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
+function CreateSnippetModal({ isOpen, onClose, checkOwner, fetchData }) {
   const toast = useToast();
   const { data: signer } = useSigner();
   const router = useRouter();
@@ -96,6 +96,7 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
       toast({
         title: "Transaction Successfull",
         status: "success",
+        description: "Wait a minute for indexing.",
         duration: 3000,
         isClosable: true,
         position: "bottom-right",
@@ -111,7 +112,8 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner }) {
     isSuccess &&
       setTimeout(() => {
         router.reload();
-      }, 3000);
+        fetchData();
+      }, 4000);
   }, [isSuccess, isLoading, setSnipData, toast]);
 
   return (

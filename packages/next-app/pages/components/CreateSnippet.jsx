@@ -5,7 +5,7 @@ import { MdAdd } from "react-icons/md";
 import { useAccount } from "wagmi";
 import CreateSnippetModal from "./CreateSnippetModal";
 
-function CreateSnippet({ owner }) {
+function CreateSnippet({ owner, fetchData }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { address } = useAccount();
 
@@ -56,6 +56,7 @@ function CreateSnippet({ owner }) {
         isOpen={isOpen}
         onClose={onClose}
         checkOwner={owner}
+        fetchData={fetchData}
       />
     </Flex>
   );

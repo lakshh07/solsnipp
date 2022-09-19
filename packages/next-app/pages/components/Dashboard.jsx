@@ -3,14 +3,17 @@ import React, { useEffect, useState } from "react";
 import CreateSnippet from "./CreateSnippet";
 import Requests from "./Requests";
 import Snippets from "./Snippets";
-
+import { gql } from "@apollo/client";
 import { useAccount, useContractRead } from "wagmi";
 import { solSnippAddress } from "../../utils/contractAddress";
 import snippContractAbi from "../../contracts/ABI/SolSnipp.json";
+import client, { query } from "../api";
+import { useSnippetData } from "../../context/snippetData";
 
-function Dashboard({ snippets }) {
+function Dashboard() {
   const [checkOwner, setCheckOwner] = useState(false);
   const { address } = useAccount();
+  const { snipData, setSnipData } = useSnippetData();
 
   const { data: owner } = useContractRead({
     addressOrName: solSnippAddress,
@@ -19,6 +22,15 @@ function Dashboard({ snippets }) {
     watch: true,
   });
 
+  async function fetchData() {
+    const { data } = await client.query({
+      query: gql`
+        ${query}
+      `,
+    });
+    setSnipData(data.snippets);
+  }
+
   useEffect(() => {
     if (owner === address) {
       setCheckOwner(true);
@@ -26,6 +38,10 @@ function Dashboard({ snippets }) {
       setCheckOwner(false);
     }
   }, [owner, address]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -50,11 +66,15 @@ function Dashboard({ snippets }) {
             color={"white"}
             bg={"rgba(3, 5, 13, 0.3)"}
           >
-            <Requests owner={checkOwner} snippets={snippets} />
+            <Requests
+              owner={checkOwner}
+              snippets={snipData}
+              fetchData={fetchData}
+            />
           </GridItem>
 
           <GridItem h={"100%"}>
-            <CreateSnippet owner={checkOwner} />
+            <CreateSnippet owner={checkOwner} fetchData={fetchData} />
             <Box
               h={"89%"}
               p={"20px"}
@@ -66,7 +86,7 @@ function Dashboard({ snippets }) {
               color={"white"}
               bg={"rgba(3, 5, 13, 0.3)"}
             >
-              <Snippets snippets={snippets} />
+              <Snippets snippets={snipData} />
             </Box>
           </GridItem>
         </Grid>

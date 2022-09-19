@@ -7,11 +7,14 @@ import { WagmiConfig } from "wagmi";
 import { wagmiClient, chains } from "../helpers/rainbowSetup";
 import Navbar from "./components/Navbar";
 import NavbarSmall from "./components/NavbarSmall";
+import SnippetData from "../context/snippetData";
+import { useState } from "react";
 
 function MyApp({ Component, pageProps }) {
+  const [snipData, setSnipData] = useState([]);
   const router = useRouter();
   const appInfo = {
-    appName: "🦄Web3Connect",
+    appName: "🦄SolSnipp",
   };
 
   const theme = extendTheme({
@@ -35,8 +38,10 @@ function MyApp({ Component, pageProps }) {
         chains={chains}
       >
         <ChakraProvider theme={theme}>
-          {router.asPath === "/" ? <Navbar /> : <NavbarSmall />}
-          <Component {...pageProps} />
+          <SnippetData.Provider value={{ snipData, setSnipData }}>
+            {router.asPath === "/" ? <Navbar /> : <NavbarSmall />}
+            <Component {...pageProps} />
+          </SnippetData.Provider>
         </ChakraProvider>
       </RainbowKitProvider>
     </WagmiConfig>

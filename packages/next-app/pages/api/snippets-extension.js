@@ -14,6 +14,7 @@ export default async function handler(req, res) {
           label
           description
           body
+          prefix
         }
       }
     `,

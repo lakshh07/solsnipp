@@ -9,41 +9,29 @@ import {
 import React, { useEffect, useState } from "react";
 import ViewSnippet from "./ViewSnippet";
 import FlipMove from "react-flip-move";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-import client, { query } from "../api";
 
 function Snippets({ snippets }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [contractType, setContractType] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [typeArray, setTypeArray] = useState([]);
-  // const [snippets, setSnippets] = useState([]);
-
-  async function fetchData() {
-    const { data } = await client.query({
-      query: gql`
-        ${query}
-      `,
-    });
-    console.log(data.snippets, "da");
-    // setSnippets(data.snippets);
-  }
 
   function makeContractTypeArray() {
     let arr = [];
     for (let i = 0; i < snippets?.length; i++) {
-      if (!arr.includes(snippets[i]?.contractType)) {
-        arr.push(snippets[i]?.contractType);
+      if (snippets[i]?.status) {
+        if (!arr.includes(snippets[i]?.contractType)) {
+          arr.push(snippets[i]?.contractType);
+        }
       }
     }
     setTypeArray(arr);
   }
 
   useEffect(() => {
-    // fetchData();
     makeContractTypeArray();
   }, [snippets]);
-  // console.log(typeArray);
+
   return (
     <Box h={"100%"}>
       <Flex

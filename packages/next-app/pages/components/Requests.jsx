@@ -21,7 +21,7 @@ import { solSnippAddress } from "../../utils/contractAddress";
 import solSnippAbi from "../../contracts/ABI/SolSnipp.json";
 import { useSigner, useWaitForTransaction } from "wagmi";
 
-export default function Requests({ owner, snippets }) {
+export default function Requests({ owner, snippets, fetchData }) {
   const { data: signer } = useSigner();
   const [hash, setHash] = useState("");
   const toast = useToast();
@@ -67,6 +67,7 @@ export default function Requests({ owner, snippets }) {
       toast({
         title: "Transaction Successfull",
         status: "success",
+        description: "Wait a minute for indexing.",
         duration: 3000,
         isClosable: true,
         position: "bottom-right",
@@ -77,7 +78,8 @@ export default function Requests({ owner, snippets }) {
     isSuccess &&
       setTimeout(() => {
         route.reload();
-      }, 1000);
+        fetchData();
+      }, 4000);
   }, [isSuccess, isLoading, toast]);
 
   return (
