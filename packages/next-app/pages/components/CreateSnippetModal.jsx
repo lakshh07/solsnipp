@@ -113,7 +113,7 @@ function CreateSnippetModal({ isOpen, onClose, checkOwner, fetchData }) {
       setTimeout(() => {
         router.reload();
         fetchData();
-      }, 4000);
+      }, 10000);
   }, [isSuccess, isLoading, setSnipData, toast]);
 
   return (

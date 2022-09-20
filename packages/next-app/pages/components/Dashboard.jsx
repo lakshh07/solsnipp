@@ -56,7 +56,7 @@ function Dashboard() {
           gap={6}
         >
           <GridItem
-            h={"100%"}
+            h={"660px"}
             p={"20px"}
             borderRadius={"16px"}
             backdropFilter={"blur(25.6849px)"}
@@ -65,6 +65,7 @@ function Dashboard() {
             }
             color={"white"}
             bg={"rgba(3, 5, 13, 0.3)"}
+            overflow={"auto"}
           >
             <Requests
               owner={checkOwner}

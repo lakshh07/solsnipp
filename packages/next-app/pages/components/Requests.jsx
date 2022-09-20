@@ -29,7 +29,6 @@ export default function Requests({ owner, snippets, fetchData }) {
 
   async function approveRequest(_id, index) {
     const contract = new ethers.Contract(solSnippAddress, solSnippAbi, signer);
-
     if (snippets[_id + 1]?.status) {
       toast({
         title: "Request already approved",
@@ -77,9 +76,10 @@ export default function Requests({ owner, snippets, fetchData }) {
 
     isSuccess &&
       setTimeout(() => {
-        route.reload();
+        // route.reload();
         fetchData();
-      }, 4000);
+        console.log("F");
+      }, 10000);
   }, [isSuccess, isLoading, toast]);
 
   return (
