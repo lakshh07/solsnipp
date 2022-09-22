@@ -9,7 +9,7 @@ async function activate(context) {
     "web3-solsnipp.searchSnippet",
     async function () {
       const res = await axios.get(
-        "http://localhost:3000/api/snippets-extension"
+        "https://solsnipp.vercel.app/api/snippets-extension"
       );
 
       const snip = await vscode.window.showQuickPick(res.data, {
@@ -28,7 +28,9 @@ async function activate(context) {
       fs.writeFile(filePath, snip.body.join("\n"), (err) => {
         if (err) {
           return vscode.window.showErrorMessage(
-            `Failed to create ${snip.label} file!`
+            `Failed to create ${snip.label} file!
+            Save file first then, try again.
+            `
           );
         }
         vscode.window.showInformationMessage(`Created ${snip.label} file 🚀`);

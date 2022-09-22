@@ -1,11 +1,24 @@
 {
   "name": "web3-solsnipp",
   "displayName": "SolSnipp",
-  "description": "Snippets for solidity",
+  "publisher": "lakshay-maini",
+  "description": "Web3-Native Snippets for Solidity",
   "version": "1.0.0",
   "engines": {
     "vscode": "^1.71.0"
   },
+  "author": {
+    "name": "Lakshay Maini"
+  },
+  "icon": "images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lakshh07/solsnipp.git"
+  },
+  "homepage": "https://solsnipp.vercel.app/",
+  "keywords": [
+    "Solidity"
+  ],
   "categories": [
     "Snippets"
   ],
