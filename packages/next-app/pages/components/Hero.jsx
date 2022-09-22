@@ -1,14 +1,19 @@
-import { Heading, Text, Flex, Box, Button } from "@chakra-ui/react";
+import { Heading, Text, Flex, Box, Button, Link } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Typed from "react-typed";
 import { BsArrowRight } from "react-icons/bs";
 import { SiVisualstudiocode } from "react-icons/si";
+import { useLoadingContext } from "../../context/loading";
 
 function Hero() {
   const router = useRouter();
+  const { setLoading } = useLoadingContext();
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
     router.prefetch("/dashboard");
   }, []);
 
@@ -61,20 +66,26 @@ function Hero() {
             </Text>
 
             <Flex justifyContent={"center"} alignItems={"center"} mt={"60px"}>
-              <Button
-                leftIcon={<SiVisualstudiocode />}
-                mx={"10px"}
-                bg={"whitesmoke"}
-                color={"#111"}
-                border={"1px solid whitesmoke"}
-                _hover={{
-                  bg: "transparent",
-                  color: "whitesmoke",
-                  transform: "scale(1.025)",
-                }}
+              <Link
+                isExternal
+                href="https://marketplace.visualstudio.com/items?itemName=lakshay-maini.web3-solsnipp"
               >
-                Install SolSnipp for VS Code
-              </Button>
+                <Button
+                  leftIcon={<SiVisualstudiocode />}
+                  mx={"10px"}
+                  bg={"whitesmoke"}
+                  color={"#111"}
+                  border={"1px solid whitesmoke"}
+                  _hover={{
+                    bg: "transparent",
+                    color: "whitesmoke",
+                    transform: "scale(1.025)",
+                  }}
+                >
+                  Install SolSnipp for VS Code
+                </Button>
+              </Link>
+
               <Button
                 mx={"10px"}
                 bg={"transparent"}
@@ -86,7 +97,10 @@ function Hero() {
                   transform: "scale(1.025)",
                 }}
                 rightIcon={<BsArrowRight />}
-                onClick={() => router.push("/dashboard")}
+                onClick={() => {
+                  setLoading(true);
+                  router.push("/dashboard");
+                }}
               >
                 Contribute
               </Button>

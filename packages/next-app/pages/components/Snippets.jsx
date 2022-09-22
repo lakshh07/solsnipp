@@ -33,7 +33,7 @@ function Snippets({ snippets }) {
   }, [snippets]);
 
   return (
-    <Box h={"100%"}>
+    <Box h={"100%"} className={"no-scrollbar"}>
       <Flex
         alignItems={"center"}
         justifyContent={"flex-start"}

@@ -9,11 +9,13 @@ import { solSnippAddress } from "../../utils/contractAddress";
 import snippContractAbi from "../../contracts/ABI/SolSnipp.json";
 import client, { query } from "../api";
 import { useSnippetData } from "../../context/snippetData";
+import { useLoadingContext } from "../../context/loading";
 
 function Dashboard() {
   const [checkOwner, setCheckOwner] = useState(false);
   const { address } = useAccount();
   const { snipData, setSnipData } = useSnippetData();
+  const { setLoading } = useLoadingContext();
 
   const { data: owner } = useContractRead({
     addressOrName: solSnippAddress,
@@ -28,7 +30,10 @@ function Dashboard() {
         ${query}
       `,
     });
-    setSnipData(data.snippets);
+    setLoading(false);
+    setTimeout(() => {
+      setSnipData(data.snippets);
+    }, 250);
   }
 
   useEffect(() => {

@@ -9,12 +9,16 @@ import Navbar from "./components/Navbar";
 import NavbarSmall from "./components/NavbarSmall";
 import SnippetData from "../context/snippetData";
 import { useState } from "react";
+import LoadingContext from "../context/loading";
+import Loading from "./components/Loading";
 
 function MyApp({ Component, pageProps }) {
   const [snipData, setSnipData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const router = useRouter();
   const appInfo = {
-    appName: "🦄SolSnipp",
+    appName: "⛓ SolSnipp",
   };
 
   const theme = extendTheme({
@@ -38,10 +42,14 @@ function MyApp({ Component, pageProps }) {
         chains={chains}
       >
         <ChakraProvider theme={theme}>
-          <SnippetData.Provider value={{ snipData, setSnipData }}>
-            {router.asPath === "/" ? <Navbar /> : <NavbarSmall />}
-            <Component {...pageProps} />
-          </SnippetData.Provider>
+          <LoadingContext.Provider value={{ loading, setLoading }}>
+            <SnippetData.Provider value={{ snipData, setSnipData }}>
+              <Loading />
+              {router.asPath === "/" ? <Navbar /> : <NavbarSmall />}
+
+              <Component {...pageProps} />
+            </SnippetData.Provider>
+          </LoadingContext.Provider>
         </ChakraProvider>
       </RainbowKitProvider>
     </WagmiConfig>

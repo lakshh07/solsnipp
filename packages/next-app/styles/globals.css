@@ -151,6 +151,13 @@ sup {
   font-weight: 700;
 }
 
+.no-scrollbar ::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar ::-webkit-scrollbar-thumb {
+  display: none;
+}
+
 .white-scroll ::-webkit-scrollbar {
   width: 5px;
   background-color: rgba(3, 5, 13, 0.9);
