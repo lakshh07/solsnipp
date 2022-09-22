@@ -9,9 +9,9 @@ dataSources:
     name: SolSnipp
     network: mumbai
     source:
-      address: "0xB9E9730eF10E98A9cf448Fc8105e0Ec76958B25f"
+      address: "0x39C66C06C58bfD0FD4AECC1cD58943e33F5224D6"
       abi: SolSnipp
-      startBlock: 28154637
+      startBlock: 28230463
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5

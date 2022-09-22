@@ -79,7 +79,6 @@ contract SolSnipp is Ownable, ReentrancyGuard {
     }
 
     function approve(uint256 _id) external onlyOwner nonReentrant {
-        require(_id >= _snippetsCount.current());
         idToSnippet[_id].status = true;
 
         emit StatusChanged(_id, idToSnippet[_id].status);

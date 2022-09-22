@@ -1,1 +1,1 @@
-export const solSnippAddress = "0xB9E9730eF10E98A9cf448Fc8105e0Ec76958B25f";
+export const solSnippAddress = "0x39C66C06C58bfD0FD4AECC1cD58943e33F5224D6";

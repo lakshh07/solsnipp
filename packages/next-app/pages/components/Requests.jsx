@@ -76,9 +76,8 @@ export default function Requests({ owner, snippets, fetchData }) {
 
     isSuccess &&
       setTimeout(() => {
-        // route.reload();
+        route.reload();
         fetchData();
-        console.log("F");
       }, 10000);
   }, [isSuccess, isLoading, toast]);
 
